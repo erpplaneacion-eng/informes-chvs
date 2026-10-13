@@ -18,7 +18,7 @@ img{max-width:100%}
   --accent:#00923F; --accent-2:#76B82A; --accent-soft:#EAF5E1; --barra:#268C39; --agua:#F1F8F3;
   --cedula:#E8A317; --cedula-soft:#FCF0D4;
   --doc1:#00923F; --doc2:#76B82A; --doc3:#2F3A33; --warn:#B4541A; --warn-soft:#F8E4D6;
-  --scene:#F3F9F5;
+  --scene:#F3F9F5; --sep:#7B3FB5; --sep-soft:#F4EEFA;
   --f-display:"League Spartan","Poppins",Arial,sans-serif;
   --f-body:"Poppins","Segoe UI",system-ui,sans-serif;
   --f-data:"Poppins","Segoe UI",system-ui,sans-serif;
@@ -203,6 +203,11 @@ footer{border-top:0;margin-bottom:28px}
 .panel .ejemplos > div{gap:5px}
 .panel .ejemplos > div span{font-size:12px;padding:3px 9px;background:var(--surface)}
 .panel .ejemplos b{font-size:12.5px;margin-right:4px}
+.hito.sep{background:var(--sep-soft);border-top-color:var(--sep);border-left:4px solid var(--sep);padding-left:14px;padding-right:14px}
+.hito.sep .f{color:var(--sep)}
+.hito.sep .tag{background:var(--sep);color:#fff}
+.nota-sep{display:flex;align-items:center;gap:8px;margin:12px 0 0;font-size:14px;font-weight:500;color:var(--sep)}
+.nota-sep i{width:14px;height:14px;border-radius:3px;background:var(--sep)}
 @media (prefers-reduced-motion: reduce){*{transition:none!important}}
 </style>
 </head>
@@ -276,18 +281,19 @@ footer{border-top:0;margin-bottom:28px}
 <section data-agua="avances">
   <div class="eyebrow">Qué se ha hecho</div>
   <h2>Avances del periodo</h2>
+  <p class="nota-sep"><i></i>En morado, el trabajo de septiembre en calidad y supervisión.</p>
   <p class="intro">241 mejoras publicadas desde que empezó el proyecto, el 26 de agosto. Se agrupan por etapas y por lo que cambian para el usuario.</p>
   <div class="linea">
     <div class="hito"><div class="f">26–27 ago</div><div><h3>Nace la aplicación: la cédula como separador <span class="tag">inicio</span></h3><p>Primera versión: corta el PDF cada vez que aparece una fotocopia de cédula. Se probó con cinco expedientes reales, sin datos personales en las pruebas. Se cerró a tiempo un fallo grave: dos trabajos a la vez podían mezclar documentos de personas distintas.</p></div></div>
     <div class="hito"><div class="f">27–29 ago</div><div><h3>Cada contratación se parte en sus documentos <span class="tag">calidad</span></h3><p>Dentro de cada contratación separa el contrato, las afiliaciones, los exámenes y demás. El nombre de la carpeta sale de la base de personal y no del escaneo. Las hojas que entraron al revés en el escáner ya no se pierden.</p></div></div>
     <div class="hito"><div class="f">29 ago</div><div><h3>Lectura en un servidor con tarjeta gráfica, bajo demanda <span class="tag">velocidad</span></h3><p>La lectura pesada se envía a un servidor con tarjeta gráfica que solo se cobra mientras trabaja. Si ese servidor falla, el trabajo sigue en el servidor principal. La inteligencia artificial revisa solo las hojas dudosas.</p></div></div>
     <div class="hito"><div class="f">29–31 ago</div><div><h3>Ajuste fino con la revisión a mano del primer lote <span class="tag">calidad</span></h3><p>Se revisó un lote real hoja por hoja y se enseñaron los nombres de formularios que faltaban: EPS, ARL, RUAF, certificados de la alcaldía, hoja de vida. Se incorporaron reglas que definió Gestión Humana, por ejemplo qué circulares van juntas y cuántas páginas puede tener cada documento.</p></div></div>
-    <div class="hito"><div class="f">1–4 sep</div><div><h3>Reconoce la cédula aunque el texto no se lea <span class="tag">calidad</span></h3><p>Un modelo visual identifica la cédula por su forma, aunque el escaneo esté borroso. Las hojas en blanco salen del resultado. En una prueba completa el procesamiento pasó de 42,5 a 16 minutos.</p></div></div>
+    <div class="hito sep"><div class="f">1–4 sep</div><div><h3>Reconoce la cédula aunque el texto no se lea <span class="tag">calidad</span></h3><p>Un modelo visual identifica la cédula por su forma, aunque el escaneo esté borroso. Las hojas en blanco salen del resultado. En una prueba completa el procesamiento pasó de 42,5 a 16 minutos.</p></div></div>
     <div class="hito"><div class="f">4–5 sep</div><div><h3>Panel web con usuario y contraseña <span class="tag">usabilidad</span></h3><p>Gestión Humana sube, procesa, revisa y descarga sin usar comandos. Desde el panel se pueden dividir y unir documentos, corregir nombres, partir contrataciones y bajar el ZIP. Los archivos grandes se suben por partes para que no se corten. El primer lote en el servidor se procesó el 4 de septiembre.</p></div></div>
-    <div class="hito"><div class="f">5–11 sep</div><div><h3>Nombre del empleador y nuevos documentos <span class="tag">calidad</span></h3><p>Cada carpeta de contratación lleva el nombre del empleador leído del contrato (Yumbo, Cali, Buga). El sistema aprendió la hoja de vida, la política de acoso y la carta de suspensión. Las hojas que no se lograron asignar a nadie ahora se ven en el panel y se pueden rescatar a mano.</p></div></div>
-    <div class="hito"><div class="f">15–18 sep</div><div><h3>La aplicación aprendió los formatos de Buga y Cali <span class="tag">calidad</span></h3><p>Los expedientes de Buga traían certificados y exámenes médicos que el sistema no reconocía. Se le enseñaron con los lotes reales de esas ciudades. También se corrigió que algunas hojas en blanco se colaran dentro de los documentos.</p></div></div>
+    <div class="hito sep"><div class="f">5–11 sep</div><div><h3>Nombre del empleador y nuevos documentos <span class="tag">calidad</span></h3><p>Cada carpeta de contratación lleva el nombre del empleador leído del contrato (Yumbo, Cali, Buga). El sistema aprendió la hoja de vida, la política de acoso y la carta de suspensión. Las hojas que no se lograron asignar a nadie ahora se ven en el panel y se pueden rescatar a mano.</p></div></div>
+    <div class="hito sep"><div class="f">15–18 sep</div><div><h3>La aplicación aprendió los formatos de Buga y Cali <span class="tag">calidad</span></h3><p>Los expedientes de Buga traían certificados y exámenes médicos que el sistema no reconocía. Se le enseñaron con los lotes reales de esas ciudades. También se corrigió que algunas hojas en blanco se colaran dentro de los documentos.</p></div></div>
     <div class="hito"><div class="f">17 sep</div><div><h3>Se probó un modelo 30 veces más grande y se descartó <span class="tag">decisión</span></h3><p>Daba el mismo acierto que el actual y costaba mucho más. Se mantuvo el modelo ligero.</p></div></div>
-    <div class="hito"><div class="f">19 sep – 4 oct</div><div><h3>Panel de revisión más ágil <span class="tag">usabilidad</span></h3><p>Buscar y ordenar trabajos, manejar hojas sueltas sin clasificar, y los lotes grandes que se parten en varias partes ya no aparecen como "procesando" para siempre.</p></div></div>
+    <div class="hito sep"><div class="f">19 sep – 4 oct</div><div><h3>Panel de revisión más ágil <span class="tag">supervisión</span></h3><p>Buscar y ordenar trabajos, manejar hojas sueltas sin clasificar, y los lotes grandes que se parten en varias partes ya no aparecen como "procesando" para siempre.</p></div></div>
     <div class="hito"><div class="f">10 oct</div><div><h3>Revisión nocturna, chat de ayuda y propuestas de corrección <span class="tag">automatización</span></h3><p>Cada noche el sistema revisa lo procesado y <b>propone</b> correcciones. La persona de Gestión Humana las acepta o las rechaza, y lo que rechaza no se vuelve a preguntar. El certificado electoral ya no se confunde con una cédula.</p></div></div>
     <div class="hito"><div class="f">10 oct</div><div><h3>Acceso con usuario y contraseña obligatorio <span class="tag">protección de datos</span></h3><p>Ninguna descarga de expedientes funciona sin sesión iniciada.</p></div></div>
     <div class="hito"><div class="f">10 oct</div><div><h3>Clasificador nuevo entrenado con lo que revisó el área <span class="tag">en uso</span></h3><p>Se entrenó con 12.327 hojas ya confirmadas por Gestión Humana. Subió el acierto de 89 % a 97 % en lotes que nunca había visto. Está en uso desde el 12 de octubre.</p></div></div>
