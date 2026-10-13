@@ -12,6 +12,20 @@ para compartirlos en las reuniones:
 > una clave (Ley 1581 de 2012). Las páginas llevan `noindex` y `robots.txt`
 > bloquea buscadores, pero eso no las hace privadas.
 
+## Sesión de Claude Code donde se hizo
+
+El informe de octubre se construyó en esta sesión. Para retomarla con todo
+el contexto (decisiones, correcciones, mediciones), abrir una terminal en la
+carpeta del repo de la app y ejecutar:
+
+```bash
+cd C:\Users\User\OneDrive\Desktop\CHVS\gestion_humana_documentos
+claude --resume 4e26fd50-acd4-42ce-9734-851f1f505183
+```
+
+Solo funciona en el equipo donde se hizo (la sesión vive en
+`~/.claude/projects/`). En otro equipo, este README es la guía.
+
 ## Estructura
 
 ```
