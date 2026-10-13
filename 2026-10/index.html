@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Separador de Expedientes · Informe de octubre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;600;700;800&family=Poppins:ital,wght@0,400;0,500;0,600;1,400&family=Libre+Baskerville:ital@1&display=swap">
+<style>
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+
+/* Layout: manual de marca CHVS 2026 -- fondo blanco, verdes Pantone 355/360, negro, palabra de fondo en verde palido y barra inferior a dos verdes */
+:root{
+  --bg:#FFFFFF; --surface:#F7F7F7; --ink:#111111; --muted:#5E6660; --line:#E3E9E4;
+  --accent:#00923F; --accent-2:#76B82A; --accent-soft:#EAF5E1; --barra:#268C39; --agua:#F1F8F3;
+  --cedula:#E8A317; --cedula-soft:#FCF0D4;
+  --doc1:#00923F; --doc2:#76B82A; --doc3:#2F3A33; --warn:#B4541A; --warn-soft:#F8E4D6;
+  --scene:#F3F9F5;
+  --f-display:"League Spartan","Poppins",Arial,sans-serif;
+  --f-body:"Poppins","Segoe UI",system-ui,sans-serif;
+  --f-data:"Poppins","Segoe UI",system-ui,sans-serif;
+  --f-logo:"Libre Baskerville","Baskerville",Georgia,serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;padding-inline:16px;padding-block:0;overflow-x:hidden}
+.wrap{max-width:1120px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.1}
+.eyebrow{font-family:var(--f-data);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+header.top{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;align-items:flex-end;padding-block:36px 20px;border-bottom:2px solid var(--ink)}
+header.top h1{font-size:clamp(30px,5vw,52px);font-weight:900;letter-spacing:-.01em}
+header.top h1 span{color:var(--accent)}
+.sello{font-family:var(--f-data);font-size:13px;color:var(--muted);text-align:right}
+.lead{font-size:clamp(18px,2.2vw,21px);max-width:68ch;margin:20px 0 0}
+.lead b{color:var(--accent)}
+
+/* Maqueta */
+.maqueta{margin-top:28px;display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:0;background:var(--surface);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+@media (max-width:860px){.maqueta{grid-template-columns:1fr}}
+.escena{position:relative;min-height:300px;background:var(--scene);cursor:grab;touch-action:pan-y}
+.escena:active{cursor:grabbing}
+.escena canvas{display:block;width:100%;height:100%;position:absolute;inset:0}
+.pin{position:absolute;transform:translate(-50%,-100%);pointer-events:auto;background:var(--ink);color:var(--bg);font-family:var(--f-display);font-weight:800;font-size:14px;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;border:2px solid var(--surface);cursor:pointer;transition:transform .2s,background .2s}
+.pin.on{background:var(--accent);color:#fff;transform:translate(-50%,-100%) scale(1.2)}
+.pin:focus-visible{outline:3px solid var(--cedula);outline-offset:2px}
+.ayuda{position:absolute;left:12px;bottom:10px;font-family:var(--f-data);font-size:11.5px;color:var(--muted);pointer-events:none}
+.ley3d{position:absolute;left:12px;top:10px;right:12px;display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--ink);pointer-events:none}
+.ley3d span{display:flex;align-items:center;gap:6px;background:var(--surface);padding:3px 8px;border-radius:3px;opacity:.92}
+.ley3d i{width:10px;height:13px;border-radius:2px;display:block}
+.panel{padding:24px;display:flex;flex-direction:column;gap:14px;border-left:1px solid var(--line);min-width:0}
+@media (max-width:860px){.panel{border-left:0;border-top:1px solid var(--line)}}
+.panel .paso{font-family:var(--f-data);font-size:12px;color:var(--accent);letter-spacing:.1em;text-transform:uppercase}
+.panel h3{font-size:26px;font-weight:800}
+.panel p{margin:0;color:var(--ink)}
+.panel .cifra{background:var(--accent-soft);border-radius:4px;padding:10px 12px;font-size:15px}
+.panel .cifra b{font-family:var(--f-data);font-weight:500}
+.controles{display:flex;gap:8px;margin-top:auto;flex-wrap:wrap}
+button{font:600 14px var(--f-body);border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:8px 14px;border-radius:4px;cursor:pointer}
+button:hover{border-color:var(--ink)}
+button.prim{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.pasos{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));border-top:1px solid var(--line);grid-column:1/-1}
+@media (max-width:860px){.pasos{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.pasos button{border:0;border-right:1px solid var(--line);border-radius:0;text-align:left;padding:12px 14px;background:transparent;font-weight:400;display:flex;flex-direction:column;gap:2px;min-width:0}
+.pasos button span{font-family:var(--f-data);font-size:11px;color:var(--muted)}
+.pasos button strong{font-family:var(--f-display);font-size:15px;font-weight:700}
+.pasos button.on{background:var(--accent-soft)}
+.pasos button.on span{color:var(--accent)}
+
+/* Secciones */
+section{margin-top:64px}
+section > h2{font-size:clamp(24px,3.4vw,34px);font-weight:800;margin-top:6px}
+.intro{max-width:68ch;color:var(--muted);margin:10px 0 0}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:24px}
+@media (max-width:760px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.kpi{background:var(--surface);padding:20px 18px;display:flex;flex-direction:column;gap:4px}
+.kpi .n{font-family:var(--f-display);font-weight:900;font-size:clamp(28px,4vw,42px);font-variant-numeric:tabular-nums;line-height:1}
+.kpi .l{font-size:15px;color:var(--muted)}
+.ejemplos{margin-top:16px;display:flex;flex-direction:column;gap:8px}
+.ejemplos > div{display:flex;flex-wrap:wrap;gap:8px}
+.ejemplos > div span{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:4px 12px;font-size:15px}
+.ejemplos b{font-family:var(--f-data);font-weight:500;margin-right:6px;color:var(--accent)}
+.izq{display:flex;flex-direction:column;min-width:0}
+.volumen{padding:18px 20px 20px;border-top:1px solid var(--line);flex:1;display:flex;flex-direction:column;gap:6px;justify-content:center}
+.volumen .vol-h{font-size:22px;font-weight:800}
+.volumen .intro{font-size:14px;margin:0}
+.volumen .kpis{margin-top:10px}
+.volumen .kpi{padding:14px 14px}
+.volumen .kpi .n{font-size:clamp(24px,3vw,32px)}
+.volumen .kpi .l{font-size:13.5px}
+.sec-ej{margin-top:28px}
+.sec-ej .ejemplos{margin-top:0}
+.glosario{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:16px}
+@media (max-width:760px){.glosario{grid-template-columns:1fr}}
+.glosario div{display:flex;flex-direction:column;gap:2px;min-width:0;border-left:3px solid var(--accent);padding-left:12px}
+.glosario b{font-family:var(--f-display);font-size:16px}
+.glosario span{font-size:15px;color:var(--muted)}
+.fuente{font-family:var(--f-data);font-size:12px;color:var(--muted);margin-top:10px}
+
+/* dibujo de cada paso */
+.fig{background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:8px}
+.fig svg{display:block;width:100%;height:auto;max-height:120px}
+.fig text{font-family:var(--f-body)}
+.panel p#pTxt{font-size:14px;color:var(--muted)}
+.panel{padding:18px;gap:10px}
+.panel h3{font-size:22px}
+.scan{animation:scan 2.6s ease-in-out infinite alternate}
+@keyframes scan{from{transform:translateY(0)}to{transform:translateY(88px)}}
+.brilla{animation:brilla 1.4s ease-in-out infinite alternate}
+@keyframes brilla{from{opacity:.35}to{opacity:1}}
+.carga{transform-box:fill-box;transform-origin:left;animation:carga 2.4s ease-in-out infinite}
+@keyframes carga{from{transform:scaleX(.05)}to{transform:scaleX(1)}}
+.entra{animation:entra .5s ease-out both}
+@keyframes entra{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.pasos button{position:relative}
+.pasos .prog{position:absolute;left:0;top:0;height:3px;width:0;background:var(--accent)}
+@media (prefers-reduced-motion: reduce){.scan,.brilla,.carga,.entra{animation:none}}
+
+.linea{margin-top:24px;display:grid;gap:0}
+.hito{display:grid;grid-template-columns:110px 1fr;gap:20px;padding:18px 0;border-top:1px solid var(--line)}
+@media (max-width:600px){.hito{grid-template-columns:1fr;gap:4px}}
+.hito .f{font-family:var(--f-data);font-size:13px;color:var(--muted);padding-top:3px}
+.hito h3{font-size:19px;font-weight:700}
+.hito p{margin:4px 0 0;max-width:70ch}
+.tag{display:inline-block;font-family:var(--f-data);font-size:11px;padding:2px 8px;border-radius:10px;margin-left:6px;vertical-align:middle;background:var(--accent-soft);color:var(--accent)}
+.tag.p{background:var(--cedula-soft);color:var(--ink)}
+
+.barras{margin-top:24px;display:grid;gap:22px;max-width:760px}
+.barra .t{display:flex;justify-content:space-between;gap:12px;font-size:15px;margin-bottom:6px;flex-wrap:wrap}
+.barra .t b{font-family:var(--f-data);font-weight:500}
+.carril{position:relative;height:30px;background:var(--line);border-radius:3px;overflow:hidden}
+.carril .v{position:absolute;inset:0 auto 0 0;background:var(--muted);opacity:.55;border-radius:3px}
+.carril .h{position:absolute;inset:0 auto 0 0;height:14px;top:8px;background:var(--accent);border-radius:2px;transition:width 1.2s ease}
+.barra .k{font-size:13px;color:var(--muted);margin-top:4px}
+
+.dos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:24px}
+@media (max-width:760px){.dos{grid-template-columns:1fr}}
+.caja{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:20px;min-width:0}
+.caja h3{font-size:19px;margin-bottom:10px}
+.caja ul{margin:0;padding-left:20px;display:grid;gap:8px}
+.caja.alerta{border-color:var(--warn);background:var(--warn-soft)}
+.caja.alerta h3{color:var(--warn)}
+footer{margin-top:64px;padding-top:18px;border-top:2px solid var(--ink);font-size:14px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+/* ---- Manual de marca CHVS ---- */
+.eyebrow{font-family:var(--f-body);font-weight:500;letter-spacing:.08em;color:var(--accent)}
+header.top{position:relative;display:grid;grid-template-columns:auto 1fr auto;gap:12px 32px;align-items:end;padding-block:40px 24px;border-bottom:0;isolation:isolate}
+@media (max-width:760px){header.top{grid-template-columns:1fr}}
+header.top .agua{position:absolute;right:-10px;top:-18px;z-index:-1;font:800 clamp(90px,17vw,210px)/.8 var(--f-display);color:var(--agua);letter-spacing:-.03em;pointer-events:none;white-space:nowrap}
+.marca-chvs{display:flex;align-items:center;gap:14px}
+.marca-chvs img{width:96px;height:auto}
+.marca-chvs span{font:italic 15px/1.25 var(--f-logo);color:var(--ink)}
+header.top h1{font-weight:800;font-size:clamp(32px,5vw,54px);letter-spacing:-.015em}
+h1,section > h2,.volumen .vol-h{background:linear-gradient(90deg,var(--accent-2),var(--accent) 70%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.corazon{display:inline-block;width:.42em;height:.42em;background:var(--accent-2);transform:rotate(45deg);position:relative;margin-left:.15em;vertical-align:.18em}
+.corazon::before,.corazon::after{content:"";position:absolute;width:100%;height:100%;border-radius:50%;background:inherit}
+.corazon::before{left:-50%}.corazon::after{top:-50%}
+.sello{font-family:var(--f-body);font-size:13px;color:var(--muted);text-align:right}
+@media (max-width:760px){.sello{text-align:left}}
+.lead{font-size:clamp(17px,2vw,19px);margin-top:4px}
+.lead b{color:var(--accent);font-weight:600}
+.maqueta{border:0;border-radius:18px;background:var(--surface);box-shadow:0 0 0 1px var(--line)}
+.escena{border-radius:18px 0 0 0}
+.panel{background:var(--bg)}
+.panel .paso{font-family:var(--f-body);font-weight:600}
+.panel h3,.hito h3,.caja h3{font-weight:700}
+.panel .cifra{background:var(--accent-soft);border-radius:12px}
+.panel .cifra b{font-family:var(--f-display);font-weight:700;font-size:17px;color:var(--accent)}
+.fig{border-radius:12px;background:var(--scene);border-color:var(--line)}
+button{font-family:var(--f-body);font-weight:500;border-radius:999px;padding:8px 16px}
+button:hover{border-color:var(--accent);color:var(--accent)}
+button.prim{background:var(--accent);border-color:var(--accent);color:#fff}
+button.prim:hover{background:var(--barra);color:#fff}
+.pin{background:var(--accent);color:#fff;font-family:var(--f-display)}
+.pin.on{background:var(--cedula);color:var(--ink)}
+.ley3d span{border-radius:999px;padding:3px 10px;background:var(--bg)}
+.volumen{background:var(--bg)}
+.kpis{background:transparent;border:0;gap:10px}
+.kpi{background:var(--surface);border-radius:12px}
+.kpi .n{font-family:var(--f-display);font-weight:800;color:var(--accent)}
+.ejemplos > div span{background:var(--surface);border:0;border-radius:999px}
+.ejemplos b{font-family:var(--f-display);font-weight:700}
+section{position:relative;isolation:isolate}
+section[data-agua]::before{content:attr(data-agua);position:absolute;right:0;top:-34px;z-index:-1;font:800 clamp(70px,13vw,160px)/.8 var(--f-display);color:var(--agua);letter-spacing:-.03em;pointer-events:none;white-space:nowrap}
+section > h2{font-weight:800;font-size:clamp(28px,3.8vw,40px)}
+.carril{border-radius:999px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line)}
+.carril .v{background:var(--accent-2);opacity:.35;border-radius:999px}
+.carril .h{background:var(--accent);border-radius:999px}
+.barra .t b{font-family:var(--f-display);font-weight:700;font-size:18px;color:var(--accent)}
+.hito{border-top-color:var(--line)}
+.hito .f{font-family:var(--f-display);font-weight:700;font-size:15px;color:var(--accent)}
+.tag{font-family:var(--f-body);font-weight:500;background:var(--accent-soft);color:var(--accent);border-radius:999px}
+footer{border-top:0;margin-bottom:28px}
+.barra-marca{display:grid;grid-template-columns:3fr 7fr;height:14px;margin-inline:-16px}
+.barra-marca i:first-child{background:var(--accent-2)}.barra-marca i:last-child{background:var(--barra)}
+.controles{margin-top:auto;gap:6px}
+.controles button{font-size:12.5px;padding:5px 12px}
+.panel .ejemplos{margin-top:4px;padding-top:12px;border-top:1px solid var(--line);gap:6px}
+.panel .ejemplos .eyebrow{font-size:10.5px}
+.panel .ejemplos > div{gap:5px}
+.panel .ejemplos > div span{font-size:12px;padding:3px 9px;background:var(--surface)}
+.panel .ejemplos b{font-size:12.5px;margin-right:4px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<header class="top">
+  <div class="agua" aria-hidden="true">informe</div>
+  <div class="marca-chvs">
+    <img src="data:image/png;base64,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" alt="Isotipo de la Corporación Hacia un Valle Solidario" width="120" height="68">
+    <span>Corporación<br>Hacia un Valle Solidario</span>
+  </div>
+  <div class="titulo">
+    <div class="eyebrow">Gestión Humana · Informe mensual de avance</div>
+    <h1>Separador de expedientes <i class="corazon" aria-hidden="true"></i></h1>
+  </div>
+  <div class="sello">Corte: 13 de octubre de 2026<br>Periodo: 26 ago – 12 oct 2026</div>
+</header>
+
+<p class="lead">El área recibe los expedientes laborales escaneados en un solo PDF de cientos o miles de hojas. La aplicación los <b>ordena sola</b>: encuentra a cada persona, separa cada contratación y guarda cada documento en su carpeta. Gestión Humana solo revisa y confirma.</p>
+
+<div class="maqueta" id="maqueta">
+  <div class="izq">
+  <div class="escena" id="escena" aria-label="Maqueta 3D del recorrido de un expediente">
+    <div class="ley3d" aria-hidden="true">
+      <span><i style="background:#fff;border:1px solid var(--line)"></i>hoja escaneada</span>
+      <span><i style="background:var(--cedula)"></i>cédula: aquí empieza una contratación</span>
+      <span><i style="background:var(--doc1)"></i><i style="background:var(--doc2)"></i><i style="background:var(--doc3)"></i>documentos ya separados</span>
+    </div>
+    <div class="ayuda">Arrastre para girar · toque un número para ver ese paso</div>
+  </div>
+  <div class="volumen">
+  <div class="eyebrow">Lo que ya pasó por la aplicación</div>
+  <h2 class="vol-h">Volumen procesado en producción</h2>
+  <p class="intro">Cifras acumuladas desde que la aplicación entró en uso, leídas directamente del almacenamiento del servidor.</p>
+  <div class="kpis">
+    <div class="kpi"><span class="n" data-n="50606">50.606</span><span class="l">hojas escaneadas leídas</span></div>
+    <div class="kpi"><span class="n" data-n="1064">1.064</span><span class="l">contrataciones separadas (cada vez que una persona fue contratada)</span></div>
+    <div class="kpi"><span class="n" data-n="21335">21.335</span><span class="l">documentos separados, cada uno en su propio PDF</span></div>
+    <div class="kpi"><span class="n" data-n="33">33</span><span class="l">lotes procesados (13,6 GB de escaneos)</span></div>
+  </div>
+  </div>
+</div>
+  <div class="panel" aria-live="polite">
+    <div class="paso" id="pPaso">Paso 1 de 6</div>
+    <h3 id="pTit"></h3>
+    <div class="fig" id="pFig" aria-hidden="true"></div>
+    <p id="pTxt"></p>
+    <div class="cifra" id="pCif"></div>
+    <div class="controles">
+      <button id="bPrev" aria-label="Paso anterior">← Anterior</button>
+      <button id="bNext" class="prim" aria-label="Paso siguiente">Siguiente →</button>
+      <button id="bVista">Acercar al paso</button>
+    </div>
+    <div class="ejemplos"><span class="eyebrow">Separados a la fecha, cada uno en su propio PDF</span><div><span><b>994</b>hojas de vida</span><span><b>1.080</b>contratos de trabajo</span><span><b>1.047</b>exámenes médicos</span><span><b>1.665</b>entregas de dotación</span><span><b>1.074</b>certificados de calidad</span><span><b>600</b>actas de terminación</span></div></div>
+  </div>
+</div>
+
+<section data-agua="calidad">
+  <div class="eyebrow">Cuánto acierta</div>
+  <h2>Calidad medida, no estimada</h2>
+  <p class="intro">Cada cifra sale de comparar lo que hizo la aplicación con lo que marcó una persona hoja por hoja.</p>
+  <div class="barras" id="barras">
+    <div class="barra"><div class="t"><span>Reconoce qué documento es cada hoja (lote de 3.712 hojas)</span><b>98,7 %</b></div><div class="carril"><div class="h" data-w="98.7"></div></div></div>
+    <div class="barra"><div class="t"><span>Sabe dónde empieza cada documento</span><b>94,5 %</b></div><div class="carril"><div class="h" data-w="94.5"></div></div></div>
+    <div class="barra"><div class="t"><span>Clasificador en lotes nuevos: antes → después del reentreno</span><b>89,0 % → 97,1 %</b></div><div class="carril"><div class="v" style="width:89%"></div><div class="h" data-w="97.1"></div></div><div class="k">Barra gris: modelo anterior. Barra verde: modelo nuevo, en uso desde el 12 de octubre.</div></div>
+    <div class="barra"><div class="t"><span>Documentos que el sistema no reconocía y la IA nombra bien</span><b>72 % → 91 %</b></div><div class="carril"><div class="v" style="width:71.7%"></div><div class="h" data-w="90.8"></div></div><div class="k">Prueba con 120 hojas que una persona ya había nombrado a mano: el método anterior acertaba 86 y el activado el 10 de octubre acierta 109.</div></div>
+  </div>
+</section>
+
+<section data-agua="avances">
+  <div class="eyebrow">Qué se ha hecho</div>
+  <h2>Avances del periodo</h2>
+  <p class="intro">241 mejoras publicadas desde que empezó el proyecto, el 26 de agosto. Se agrupan por etapas y por lo que cambian para el usuario.</p>
+  <div class="linea">
+    <div class="hito"><div class="f">26–27 ago</div><div><h3>Nace la aplicación: la cédula como separador <span class="tag">inicio</span></h3><p>Primera versión: corta el PDF cada vez que aparece una fotocopia de cédula. Se probó con cinco expedientes reales, sin datos personales en las pruebas. Se cerró a tiempo un fallo grave: dos trabajos a la vez podían mezclar documentos de personas distintas.</p></div></div>
+    <div class="hito"><div class="f">27–29 ago</div><div><h3>Cada contratación se parte en sus documentos <span class="tag">calidad</span></h3><p>Dentro de cada contratación separa el contrato, las afiliaciones, los exámenes y demás. El nombre de la carpeta sale de la base de personal y no del escaneo. Las hojas que entraron al revés en el escáner ya no se pierden.</p></div></div>
+    <div class="hito"><div class="f">29 ago</div><div><h3>Lectura en un servidor con tarjeta gráfica, bajo demanda <span class="tag">velocidad</span></h3><p>La lectura pesada se envía a un servidor con tarjeta gráfica que solo se cobra mientras trabaja. Si ese servidor falla, el trabajo sigue en el servidor principal. La inteligencia artificial revisa solo las hojas dudosas.</p></div></div>
+    <div class="hito"><div class="f">29–31 ago</div><div><h3>Ajuste fino con la revisión a mano del primer lote <span class="tag">calidad</span></h3><p>Se revisó un lote real hoja por hoja y se enseñaron los nombres de formularios que faltaban: EPS, ARL, RUAF, certificados de la alcaldía, hoja de vida. Se incorporaron reglas que definió Gestión Humana, por ejemplo qué circulares van juntas y cuántas páginas puede tener cada documento.</p></div></div>
+    <div class="hito"><div class="f">1–4 sep</div><div><h3>Reconoce la cédula aunque el texto no se lea <span class="tag">calidad</span></h3><p>Un modelo visual identifica la cédula por su forma, aunque el escaneo esté borroso. Las hojas en blanco salen del resultado. En una prueba completa el procesamiento pasó de 42,5 a 16 minutos.</p></div></div>
+    <div class="hito"><div class="f">4–5 sep</div><div><h3>Panel web con usuario y contraseña <span class="tag">usabilidad</span></h3><p>Gestión Humana sube, procesa, revisa y descarga sin usar comandos. Desde el panel se pueden dividir y unir documentos, corregir nombres, partir contrataciones y bajar el ZIP. Los archivos grandes se suben por partes para que no se corten. El primer lote en el servidor se procesó el 4 de septiembre.</p></div></div>
+    <div class="hito"><div class="f">5–11 sep</div><div><h3>Nombre del empleador y nuevos documentos <span class="tag">calidad</span></h3><p>Cada carpeta de contratación lleva el nombre del empleador leído del contrato (Yumbo, Cali, Buga). El sistema aprendió la hoja de vida, la política de acoso y la carta de suspensión. Las hojas que no se lograron asignar a nadie ahora se ven en el panel y se pueden rescatar a mano.</p></div></div>
+    <div class="hito"><div class="f">15–18 sep</div><div><h3>La aplicación aprendió los formatos de Buga y Cali <span class="tag">calidad</span></h3><p>Los expedientes de Buga traían certificados y exámenes médicos que el sistema no reconocía. Se le enseñaron con los lotes reales de esas ciudades. También se corrigió que algunas hojas en blanco se colaran dentro de los documentos.</p></div></div>
+    <div class="hito"><div class="f">17 sep</div><div><h3>Se probó un modelo 30 veces más grande y se descartó <span class="tag">decisión</span></h3><p>Daba el mismo acierto que el actual y costaba mucho más. Se mantuvo el modelo ligero.</p></div></div>
+    <div class="hito"><div class="f">19 sep – 4 oct</div><div><h3>Panel de revisión más ágil <span class="tag">usabilidad</span></h3><p>Buscar y ordenar trabajos, manejar hojas sueltas sin clasificar, y los lotes grandes que se parten en varias partes ya no aparecen como "procesando" para siempre.</p></div></div>
+    <div class="hito"><div class="f">10 oct</div><div><h3>Revisión nocturna, chat de ayuda y propuestas de corrección <span class="tag">automatización</span></h3><p>Cada noche el sistema revisa lo procesado y <b>propone</b> correcciones. La persona de Gestión Humana las acepta o las rechaza, y lo que rechaza no se vuelve a preguntar. El certificado electoral ya no se confunde con una cédula.</p></div></div>
+    <div class="hito"><div class="f">10 oct</div><div><h3>Acceso con usuario y contraseña obligatorio <span class="tag">protección de datos</span></h3><p>Ninguna descarga de expedientes funciona sin sesión iniciada.</p></div></div>
+    <div class="hito"><div class="f">10 oct</div><div><h3>Clasificador nuevo entrenado con lo que revisó el área <span class="tag">en uso</span></h3><p>Se entrenó con 12.327 hojas ya confirmadas por Gestión Humana. Subió el acierto de 89 % a 97 % en lotes que nunca había visto. Está en uso desde el 12 de octubre.</p></div></div>
+    <div class="hito"><div class="f">11–12 oct</div><div><h3>Herramientas de corrección a mano <span class="tag">usabilidad</span></h3><p>Subir varios PDF a la vez, ver todas las hojas de un documento y sacar varias de una vez, unir documentos que quedaron partidos, marcar cada contratación como "revisada por Gestión Humana" y ver la lista organizada por días. La hoja de firmas del contrato ya no se separa por error.</p></div></div>
+  </div>
+</section>
+
+<footer><span>Separador de expedientes · Gestión Humana CHVS</span><span>Informe sin datos personales: ninguna cédula ni nombre real aparece en esta página.</span></footer>
+</div>
+<div class="barra-marca" aria-hidden="true"><i></i><i></i></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+const PASOS=[
+ {t:"Llega el expediente",c:"Recepción",x:-10.5,
+  d:"Gestión Humana sube el PDF escaneado desde el panel web, uno o varios a la vez. Puede pesar más de un gigabyte; el sistema lo recibe por partes para que no se corte.",
+  n:"El lote más grande procesado tenía <b>6.616</b> hojas en un solo archivo."},
+ {t:"La máquina lee cada hoja",c:"Lectura",x:-6.3,
+  d:"Un servidor con tarjeta gráfica lee el texto de todas las hojas, como lo haría una persona que pasa la vista por cada una. Al leerlas reconoce cuáles son fotocopias de cédula: en la maqueta se encienden en amarillo.",
+  n:"Un lote de <b>2.500</b> hojas tarda unos <b>10 minutos</b>; el de 6.616 hojas, <b>15</b>."},
+ {t:"Encuentra las cédulas",c:"Separación",x:-2.1,
+  d:"La cédula funciona como la pestaña separadora de un archivador: cada vez que se contrata a alguien se archiva de nuevo su cédula, así que donde aparece una, empieza la contratación siguiente. Las hojas que vienen detrás se agrupan con ella en un paquete aparte. Un expediente con tres contratos queda en tres paquetes. El número de cédula se cruza con la base de personal para poner el nombre correcto.",
+  n:"<b>1.064</b> contrataciones separadas hasta hoy."},
+ {t:"Separa cada documento",c:"Clasificación",x:2.1,
+  d:"Dentro de cada contratación reconoce el contrato, las afiliaciones, los exámenes médicos, los certificados y los demás documentos, y deja cada uno en su propio PDF con su nombre.",
+  n:"<b>21.335</b> documentos separados, con <b>98,7 %</b> de acierto medido."},
+ {t:"Doble revisión",c:"Control",x:6.3,
+  d:"La inteligencia artificial revisa las hojas dudosas y cada noche propone correcciones. Una persona de Gestión Humana acepta o rechaza y marca la contratación como revisada. La decisión final siempre es humana.",
+  n:"<b>3.262</b> acciones de revisión registradas en la bitácora."},
+ {t:"Carpeta por persona",c:"Archivo",x:10.5,
+  d:"El resultado es una carpeta por persona, con una subcarpeta por cada contratación y los documentos ordenados adentro. Se descarga en un ZIP listo para el archivo digital.",
+  n:"<b>554</b> carpetas de persona generadas, listas para el archivo digital."}
+];
+// dibujos del panel, uno por paso
+const H=(x,y,c="var(--surface)",w=22,h=30,ex="")=>`<g class="${ex}"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2" style="fill:${c};stroke:var(--muted);stroke-width:1"/><path d="M${x+4} ${y+h*.28}h${w-8}M${x+4} ${y+h*.48}h${w-8}M${x+4} ${y+h*.68}h${w-12}" style="stroke:var(--muted);stroke-width:1.2;opacity:.55"/></g>`;
+const T=(x,y,t,a="middle",c="var(--ink)",s=12,w=600)=>`<text x="${x}" y="${y}" text-anchor="${a}" style="fill:${c};font-size:${s}px;font-weight:${w}">${t}</text>`;
+const F=(x1,y,x2)=>`<path d="M${x1} ${y}H${x2-7}" style="stroke:var(--ink);stroke-width:2;fill:none"/><path d="M${x2-9} ${y-5}L${x2} ${y}L${x2-9} ${y+5}z" style="fill:var(--ink)"/>`;
+const C=(x,y,w,h,c,t)=>`<path d="M${x} ${y}H${x+w*.4}l6 6H${x+w}V${y+h}H${x}Z"style="fill:${c};stroke:var(--ink);stroke-width:1"/>`+(t?T(x+w/2,y+h/2+8,t,"middle","var(--ink)",11):"");
+const SVG=b=>`<svg viewBox="0 0 300 130" class="entra">${b}</svg>`;
+const FIG=[
+ SVG([0,1,2,3,4].map(i=>H(18+i*5,34-i*5,"var(--surface)",50,66)).join("")+T(52,122,"PDF escaneado","middle","var(--muted)",11)+
+  F(98,68,166)+T(132,58,"subir","middle","var(--muted)",11)+
+  `<rect x="172" y="26" width="112" height="70" rx="5" style="fill:var(--surface);stroke:var(--ink);stroke-width:2"/><rect x="214" y="96" width="28" height="8" style="fill:var(--ink)"/>`+
+  T(228,52,"Panel web")+`<rect x="186" y="66" width="84" height="9" rx="4" style="fill:var(--line)"/><rect class="carga" x="186" y="66" width="84" height="9" rx="4" style="fill:var(--accent)"/>`+T(228,122,"varios a la vez","middle","var(--muted)",11)),
+ SVG(H(26,10,"var(--surface)",84,110)+`<rect class="scan" x="20" y="16" width="96" height="4" rx="2" style="fill:var(--accent);opacity:.8"/>`+
+  `<circle cx="104" cy="82" r="20" style="fill:var(--accent-soft);stroke:var(--ink);stroke-width:4;opacity:.9"/><path d="M118 96l16 16" style="stroke:var(--ink);stroke-width:6;stroke-linecap:round"/>`+
+  [0,1,2,3,4].map(i=>H(156+i*26,40,i===2?"var(--cedula)":"var(--surface)",20,28,i===2?"brilla":"")).join("")+
+  T(222,96,"lee cada hoja y","middle","var(--ink)",12,400)+T(222,112,"reconoce la cédula","middle","var(--ink)",12,700)),
+ SVG(T(8,26,"Llega","start","var(--muted)",11)+["c","w","w","w","c","w","w","c","w","w"].map((k,i)=>H(62+i*23,8,k==="c"?"var(--cedula)":"var(--surface)",15,22)).join("")+
+  `<path d="M150 38v16" style="stroke:var(--muted);stroke-width:2;stroke-dasharray:3 3"/>`+
+  T(8,84,"Sale","start","var(--muted)",11)+
+  [[62,4],[148,3],[220,3]].map(([x0,n],g)=>`<path d="M${x0-6} 58v44" style="stroke:var(--cedula);stroke-width:3"/>`+
+   Array.from({length:n},(_,i)=>H(x0+i*17,66,i===0?"var(--cedula)":"var(--surface)",15,22)).join("")+
+   `<path d="M${x0} 96h${(n-1)*17+15}" style="stroke:var(--ink);stroke-width:1.5"/>`+T(x0+((n-1)*17+15)/2,116,(g+1)+"ª contratación","middle","var(--ink)",10.5,700)).join("")),
+ SVG([4,3,2,1].map(i=>H(28+i*6,26+i*4,"var(--surface)",40,54)).join("")+H(28,26,"var(--cedula)",40,54)+T(56,112,"una contratación","middle","var(--muted)",11)+
+  F(104,62,150)+
+  [["var(--doc1)","Contrato"],["var(--doc2)","EPS · pensión"],["var(--doc3)","Exámenes"]].map(([c,t],i)=>H(162+i*46,34,c,30,42)+H(166+i*46,38,c,30,42)+T(181+i*46,104,t,"middle","var(--ink)",10.5)).join("")+
+  T(220,122,"cada uno en su propio PDF","middle","var(--muted)",11)),
+ SVG(`<path d="M70 22l26 15v30l-26 15l-26 -15v-30z" style="fill:var(--accent)"/>`+T(70,58,"IA","middle","#fff",16,800)+T(70,106,"propone","middle","var(--ink)",12,700)+T(70,121,"cada noche","middle","var(--muted)",11)+
+  F(112,52,190)+T(151,40,"¿va aparte?","middle","var(--muted)",11)+
+  `<circle cx="228" cy="34" r="13" style="fill:var(--muted)"/><path d="M206 82c0-18 10-30 22-30s22 12 22 30z" style="fill:var(--ink)"/>`+
+  `<circle cx="256" cy="70" r="13" style="fill:var(--accent);stroke:var(--surface);stroke-width:2"/><path d="M250 70l4 4l8 -8" style="stroke:#fff;stroke-width:2.5;fill:none"/>`+
+  T(232,106,"Gestión Humana","middle","var(--ink)",12,700)+T(232,121,"decide","middle","var(--muted)",11)),
+ SVG(C(14,44,70,44,"var(--cedula-soft)","Persona")+`<path d="M84 66h20M104 32v74M104 32h12M104 106h12" style="stroke:var(--ink);stroke-width:1.5;fill:none"/>`+
+  C(118,12,86,40,"var(--surface)","Contratación 1")+C(118,86,86,40,"var(--surface)","Contratación 2")+
+  [["var(--doc1)",0],["var(--doc2)",1],["var(--doc3)",2]].map(([c,i])=>H(216+i*26,18,c,20,26)+H(216+i*26,92,c,20,26)).join(""))
+];
+let paso=0,auto=false,autoT=0,cerca=false;
+const $=id=>document.getElementById(id);
+const pasosEl=document.createElement("div");
+PASOS.forEach((p,i)=>{const b=document.createElement("button");b.innerHTML=`<i class="prog"></i><span>${i+1} · ${p.c}</span><strong>${p.t}</strong>`;b.onclick=()=>{ir(i);parar()};pasosEl.appendChild(b)});
+function pintar(){const p=PASOS[paso];$("pPaso").textContent=`Paso ${paso+1} de 6 · ${p.c}`;$("pTit").textContent=p.t;$("pFig").innerHTML=FIG[paso];$("pTxt").textContent=p.d;$("pCif").innerHTML=p.n;
+ [...pasosEl.children].forEach((b,i)=>b.classList.toggle("on",i===paso));pins.forEach((e,i)=>e.classList.toggle("on",i===paso));}
+function ir(i){paso=(i+6)%6;autoT=0;pintar();}
+$("bVista").onclick=()=>{cerca=!cerca;$("bVista").textContent=cerca?"Ver toda la banda":"Acercar al paso";if(!cerca)parar()};
+function parar(){}
+$("bPrev").onclick=()=>{ir(paso-1);parar()};$("bNext").onclick=()=>{ir(paso+1);parar()};
+
+
+const escena=$("escena");
+const pins=PASOS.map((p,i)=>{const e=document.createElement("button");e.className="pin";e.textContent=i+1;e.setAttribute("aria-label","Paso "+(i+1)+": "+p.t);e.onclick=()=>{ir(i);parar()};escena.appendChild(e);return e});
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+pintar();
+
+// barras de calidad
+requestAnimationFrame(()=>document.querySelectorAll(".carril .h").forEach(h=>h.style.width=h.dataset.w+"%"));
+
+if(!window.THREE){return;}
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const renderer=new THREE.WebGLRenderer({antialias:true,alpha:false});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+escena.prepend(renderer.domElement);
+const scene=new THREE.Scene();
+const cam=new THREE.OrthographicCamera(-1,1,1,-1,0.1,200);
+const mundo=new THREE.Group();scene.add(mundo);
+scene.add(new THREE.HemisphereLight(0xffffff,0x8899aa,0.75));
+const sol=new THREE.DirectionalLight(0xffffff,0.75);sol.position.set(-6,16,10);sol.castShadow=true;
+sol.shadow.mapSize.set(1024,1024);Object.assign(sol.shadow.camera,{left:-16,right:16,top:10,bottom:-10});scene.add(sol);
+
+const M=c=>new THREE.MeshStandardMaterial({color:c,roughness:.75,metalness:.05});
+const caja=(w,h,d,m,x,y,z,g)=>{const o=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),m);o.position.set(x,y,z);o.castShadow=true;o.receiveShadow=true;(g||mundo).add(o);return o};
+const mats={};
+function colores(){
+ const k={ink:"--ink",surface:"--surface",accent:"--accent",cedula:"--cedula",d1:"--doc1",d2:"--doc2",d3:"--doc3",line:"--line",muted:"--muted",scene:"--scene"};
+ for(const n in k){const c=new THREE.Color(css(k[n])||"#888");if(mats[n])mats[n].color.copy(c);else mats[n]=M(c)}
+ scene.background=new THREE.Color(css("--scene"));
+}
+colores();
+const papel=new THREE.MeshStandardMaterial({color:0xffffff,roughness:.9});
+
+// piso y banda
+const piso=caja(30,.3,9,mats.line,0,-.15,0);piso.castShadow=false;
+caja(25,.35,2.2,mats.ink,0,.18,0);
+for(let i=-12;i<=12;i+=1){caja(.06,.02,2.2,mats.muted,i,.37,0)}
+const estaciones=[];
+// 1 pila de papel
+{const g=new THREE.Group();g.position.x=PASOS[0].x;mundo.add(g);
+ caja(2.2,.25,2.6,mats.muted,0,.12,-2.6,g);
+ for(let i=0;i<16;i++){const s=caja(1.6,.09,2,papel,(Math.random()-.5)*.12,.3+i*.1,-2.6+(Math.random()-.5)*.12,g);s.rotation.y=(Math.random()-.5)*.08}
+ estaciones.push({g,top:2.3,z:-2.6});}
+// 2 lector
+let luz;
+{const g=new THREE.Group();g.position.x=PASOS[1].x;mundo.add(g);
+ caja(.4,3,.4,mats.ink,0,1.5,-1.4,g);caja(.4,3,.4,mats.ink,0,1.5,1.4,g);caja(.9,.5,3.4,mats.ink,0,3.1,0,g);
+ luz=new THREE.Mesh(new THREE.BoxGeometry(.08,2.6,2.6),new THREE.MeshBasicMaterial({color:mats.accent.color,transparent:true,opacity:.35}));luz.position.set(0,1.6,0);g.add(luz);
+ caja(.7,.12,2.8,mats.accent,0,2.84,0,g);
+ estaciones.push({g,top:3.5,z:0});}
+// 3 puerta de cédula
+{const g=new THREE.Group();g.position.x=PASOS[2].x;mundo.add(g);
+ caja(.35,2.6,.35,mats.cedula,0,1.3,-1.4,g);caja(.35,2.6,.35,mats.cedula,0,1.3,1.4,g);caja(.5,.35,3.2,mats.cedula,0,2.7,0,g);
+ const card=new THREE.Group();card.position.set(0,3.9,0);g.add(card);
+ caja(.12,1.4,2.2,mats.cedula,0,0,0,card);caja(.14,.8,.6,mats.surface,0,0,-.6,card);
+ for(let i=0;i<3;i++)caja(.14,.1,.9,mats.ink,0,.35-i*.3,.45,card);
+ estaciones.push({g,top:4.8,z:0,card});}
+// 4 clasificador con bandejas
+{const g=new THREE.Group();g.position.x=PASOS[3].x;mundo.add(g);
+ caja(2.4,1.2,1.6,mats.surface,0,.6,-2.6,g);
+ [mats.d1,mats.d2,mats.d3].forEach((m,i)=>{caja(.6,.5,1.2,m,-.75+i*.75,1.45,-2.6,g);for(let k=0;k<3;k++)caja(.5,.05,.9,papel,-.75+i*.75,1.75+k*.07,-2.6,g)});
+ caja(2.4,1.2,1.6,mats.surface,0,.6,2.6,g);
+ [mats.d3,mats.d1,mats.d2].forEach((m,i)=>caja(.6,.4,1.2,m,-.75+i*.75,1.4,2.6,g));
+ estaciones.push({g,top:2.4,z:-2.6});}
+// 5 revisión: IA + persona
+let ia;
+{const g=new THREE.Group();g.position.x=PASOS[4].x;mundo.add(g);
+ caja(2,.9,1.4,mats.surface,0,.45,-2.7,g);
+ ia=new THREE.Mesh(new THREE.IcosahedronGeometry(.55,0),mats.accent);ia.position.set(-.45,1.7,-2.7);ia.castShadow=true;g.add(ia);
+ const cuerpo=new THREE.Mesh(new THREE.CylinderGeometry(.32,.4,1.1,16),mats.ink);cuerpo.position.set(.55,1.45,-2.7);cuerpo.castShadow=true;g.add(cuerpo);
+ const cab=new THREE.Mesh(new THREE.SphereGeometry(.28,16,12),mats.muted);cab.position.set(.55,2.25,-2.7);cab.castShadow=true;g.add(cab);
+ estaciones.push({g,top:2.9,z:-2.7});}
+// 6 archivador con carpetas
+{const g=new THREE.Group();g.position.x=PASOS[5].x;mundo.add(g);
+ caja(2.6,1.6,2.4,mats.muted,0,.8,-2.6,g);
+ const cs=[mats.cedula,mats.d1,mats.d2,mats.d3,mats.cedula,mats.d1];
+ cs.forEach((m,i)=>{const f=caja(.14,1.1,1.7,m,-1+i*.4,2.15,-2.6,g);f.rotation.z=(i%2?.06:-.05)});
+ caja(.5,.4,2.4,mats.ink,1.1,.2,0,g);
+ estaciones.push({g,top:3,z:-2.6});}
+
+// hojas en la banda: paquetes de 6, la cédula va al frente de cada paquete
+const HOJAS=[],N=24,G=6,L=22,X0=-11,PUERTA=PASOS[2].x;
+const geoH=new THREE.BoxGeometry(.8,.04,1.05);
+const geoPest=new THREE.BoxGeometry(.06,.75,1.05);
+for(let i=0;i<N;i++){
+ const j=i%G,ced=j===G-1;
+ const m=new THREE.MeshStandardMaterial({color:0xffffff,roughness:.85});
+ const h=new THREE.Mesh(geoH,m);h.castShadow=true;mundo.add(h);
+ let pest=null;if(ced){pest=new THREE.Mesh(geoPest,mats.cedula);pest.position.set(.4,.36,0);pest.castShadow=true;h.add(pest)}
+ HOJAS.push({h,m,u:i/N,j,ced,pest,tipo:j>=3?mats.d1:j===2?mats.d2:mats.d3});
+}
+// destello en la puerta cuando pasa una cédula
+const corte=new THREE.Mesh(new THREE.BoxGeometry(.06,2.3,2.6),new THREE.MeshBasicMaterial({color:mats.cedula.color,transparent:true,opacity:0}));
+corte.position.set(PUERTA,1.3,0);mundo.add(corte);
+function colocarHoja(o){
+ const xr=X0+o.u*L, xc=X0+(o.u+(G-1-o.j)/N)*L;
+ // al pasar la cédula por la puerta, su paquete se junta y se abre espacio con el siguiente
+ const t=Math.max(0,Math.min(1,(xc-PUERTA)/1.6));
+ const x=xc+(xr-xc)*(1-.5*t);
+ o.h.position.set(x,.42+(G-1-o.j)*.025*t,0);o.h.rotation.set(0,0,0);
+ // al pasar el lector, salta un poco
+ const dl=Math.abs(x-PASOS[1].x);if(dl<1)o.h.position.y+=.25*(1-dl);
+ if(o.pest)o.pest.visible=x>PUERTA-.1;
+ if(o.ced){o.m.color.copy(x>PASOS[1].x?mats.cedula.color:new THREE.Color(0xffffff));
+  if(Math.abs(x-PUERTA)<.5)corteLuz=Math.max(corteLuz,1-Math.abs(x-PUERTA)/.5)}
+ else if(x<PASOS[3].x){o.m.color.set(0xffffff)}
+ else o.m.color.copy(o.tipo.color);
+ o.h.visible=x<11;
+ if(x>9.3){const k=Math.min(1,(x-9.3)/1.7);o.h.position.y=.42+k*.4;o.h.position.z=-k*1.6;o.h.rotation.x=k*1.2;o.h.scale.setScalar(1-k*.6)}else o.h.scale.setScalar(1);
+}
+
+// tamaño y cámara
+let ancho=1,alto=1;
+function medir(){
+ ancho=escena.clientWidth;alto=Math.max(300,Math.min(380,ancho*.48));escena.style.height=alto+"px";
+ renderer.setSize(ancho,alto,false);
+ const asp=ancho/alto,mitad=Math.max(9.5,16/asp);
+ cam.left=-mitad*asp;cam.right=mitad*asp;cam.top=mitad;cam.bottom=-mitad;cam.updateProjectionMatrix();
+}
+const objetivo=new THREE.Vector3(0,1,0);let rotY=-.5,rotObj=-.5,incl=.62;
+function ponerCam(){const r=40;cam.position.set(Math.sin(rotY)*Math.cos(incl)*r,Math.sin(incl)*r,Math.cos(rotY)*Math.cos(incl)*r);cam.lookAt(objetivo)}
+addEventListener("resize",medir);medir();
+
+// arrastrar para girar
+let arr=null;
+renderer.domElement.addEventListener("pointerdown",e=>{arr={x:e.clientX,r:rotObj,y:e.clientY,i:incl};renderer.domElement.setPointerCapture(e.pointerId)});
+renderer.domElement.addEventListener("pointermove",e=>{if(!arr)return;rotObj=arr.r-(e.clientX-arr.x)*.008;rotObj=Math.max(-1.25,Math.min(1.25,rotObj));
+ if(e.pointerType==="mouse"){incl=Math.max(.25,Math.min(1.2,arr.i+(e.clientY-arr.y)*.005))}});
+renderer.domElement.addEventListener("pointerup",e=>{if(arr&&Math.abs(e.clientX-arr.x)<4)clic(e);arr=null});
+const ray=new THREE.Raycaster(),pv=new THREE.Vector2();
+function clic(e){const r=renderer.domElement.getBoundingClientRect();pv.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1);ray.setFromCamera(pv,cam);
+ const hit=ray.intersectObjects(estaciones.map(s=>s.g),true)[0];if(!hit)return;let o=hit.object;while(o.parent&&!estaciones.some(s=>s.g===o))o=o.parent;const i=estaciones.findIndex(s=>s.g===o);if(i>=0){ir(i);parar()}}
+
+// colores al cambiar tema
+const mq=matchMedia("(prefers-color-scheme: dark)");mq.addEventListener&&mq.addEventListener("change",colores);
+new MutationObserver(colores).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+
+const v=new THREE.Vector3();let ult=performance.now(),corteLuz=0;
+function cuadro(t){
+ const dt=Math.min(.05,(t-ult)/1000);ult=t;
+ if(auto){autoT+=dt;if(autoT>6.5){ir(paso+1)}}
+ rotY+=(rotObj-rotY)*.08;
+ const fx=cerca?PASOS[paso].x:0,fz=cerca?estaciones[paso].z*.45:0,zm=cerca?1.3:1;
+ objetivo.x+=(fx-objetivo.x)*.05;objetivo.z+=(fz-objetivo.z)*.05;
+ cam.zoom+=(zm-cam.zoom)*.05;cam.updateProjectionMatrix();ponerCam();
+ [...pasosEl.children].forEach((b,i)=>b.firstChild.style.width=i!==paso?"0":auto?Math.min(100,autoT/6.5*100)+"%":"100%");
+ if(!reduce){HOJAS.forEach(o=>{o.u=(o.u+dt*.035)%1});luz.material.opacity=.2+.25*(.5+.5*Math.sin(t/180));ia.rotation.y+=dt*1.2;ia.rotation.x+=dt*.5;estaciones[2].card.rotation.y=Math.sin(t/900)*.35}
+ corteLuz=0;HOJAS.forEach(colocarHoja);corte.material.color.copy(mats.cedula.color);corte.material.opacity=.7*corteLuz;
+ estaciones.forEach((s,i)=>{const sc=i===paso?1.06:1;s.g.scale.x+=(sc-s.g.scale.x)*.15;s.g.scale.y=s.g.scale.z=s.g.scale.x;
+  v.set(s.g.position.x,s.top+.6,s.z);v.project(cam);const px=(v.x+1)/2*ancho,py=(1-v.y)/2*alto;pins[i].style.left=px+"px";pins[i].style.top=py+"px";
+  pins[i].style.visibility=px<10||px>ancho-10||py<30||py>alto?"hidden":"visible"});
+ renderer.render(scene,cam);requestAnimationFrame(cuadro);
+}
+requestAnimationFrame(cuadro);
+})();
+</script>
+
+</body>
+</html>
